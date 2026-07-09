@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>SOUR DATE</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Be+Vietnam+Pro:wght@400;700&family=Caveat&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <!-- React & Router CDNs -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#1b1c1c",
+                        "secondary": "#725477",
+                        "surface-container": "#f0eded",
+                        "background": "#fbf9f8",
+                        "primary-fixed-dim": "#cabeff",
+                        "secondary-fixed": "#fcd7ff",
+                        "surface-tint": "#6042d6",
+                        "surface": "#fbf9f8",
+                        "on-background": "#1b1c1c",
+                        "tertiary-container": "#7e4e58",
+                        "on-tertiary-container": "#ffc5cf",
+                        "on-secondary-container": "#77587c",
+                        "on-primary-fixed": "#1c0062",
+                        "primary-fixed": "#e6deff",
+                        "secondary-container": "#fad3fd",
+                        "on-secondary-fixed": "#2a1131",
+                        "error": "#ba1a1a",
+                        "outline": "#797586",
+                        "on-primary-fixed-variant": "#4723be",
+                        "tertiary": "#633741",
+                        "inverse-on-surface": "#f3f0f0",
+                        "inverse-primary": "#cabeff",
+                        "on-tertiary-fixed": "#330f19",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#f4b6c1",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#fbf9f8",
+                        "surface-variant": "#e4e2e1",
+                        "surface-container-low": "#f6f3f2",
+                        "secondary-fixed-dim": "#dfbbe4",
+                        "outline-variant": "#c9c4d7",
+                        "inverse-surface": "#303030",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffd9df",
+                        "surface-dim": "#dcd9d9",
+                        "on-surface-variant": "#484554",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#d8ceff",
+                        "surface-container-highest": "#e4e2e1",
+                        "on-error": "#ffffff",
+                        "primary-container": "#5d3fd3",
+                        "primary": "#451ebb",
+                        "on-tertiary-fixed-variant": "#663a43",
+                        "surface-container-high": "#eae7e7",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#593d5f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "60px",
+                        "margin-mobile": "20px",
+                        "layer-overlap": "-12px",
+                        "gutter": "16px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "label-pixel": ["Space Grotesk"],
+                        "headline-lg": ["Anton"],
+                        "headline-lg-mobile": ["Anton"],
+                        "headline-md": ["Anton"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "note-text": ["Caveat"]
+                    },
+                    "fontSize": {
+                        "label-pixel": ["12px", {"lineHeight": "1", "fontWeight": "700"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["36px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "note-text": ["24px", {"lineHeight": "1.2", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .sticker-rotate-1 { transform: rotate(-2deg); }
+        .sticker-rotate-2 { transform: rotate(1.5deg); }
+        .sticker-rotate-3 { transform: rotate(-1deg); }
+        
+        .paper-texture {
+            background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+        }
+
+        .notebook-lines {
+            background-image: linear-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 100% 2.5rem;
+        }
+
+        .duct-tape-texture {
+            background-color: var(--tw-bg-opacity);
+            position: relative;
+            overflow: hidden;
+        }
+        .duct-tape-texture::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 4px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+
+        .shadow-brutal {
+            box-shadow: 4px 4px 0px 0px rgba(27,28,28,1);
+        }
+
+        .pixel-border {
+            box-shadow: 
+                0 -4px 0 0 #1b1c1c,
+                0 4px 0 0 #1b1c1c,
+                -4px 0 0 0 #1b1c1c,
+                4px 0 0 0 #1b1c1c;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        .glitch-anim {
+            animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
+        }
+        
+        .shake { animation: shake 0.5s ease-in-out infinite; }
+        @keyframes shake {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-secondary-container selection:text-on-secondary-container overflow-x-hidden">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        // --- Shared Components ---
+
+        const Header = () => {
+            const navigate = useNavigate();
+            return (
+                <header class="bg-background border-b-4 border-on-surface shadow-[4px_4px_0px_0px_rgba(27,28,28,1)] fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4">
+                    <Link to="/" class="font-headline-md text-headline-md text-primary rotate-[-2deg]">S'OUR' DATE</Link>
+                    <nav class="hidden md:flex gap-8 items-center">
+                        <Link to="/" class="font-label-pixel text-label-pixel text-primary border-b-2 border-primary underline decoration-wavy hover:rotate-2 hover:scale-110 transition-transform">Our Story</Link>
+                    </nav>
+                </header>
+            );
+        };
+
+        const BottomNav = () => {
+            const location = useLocation();
+            const isActive = (path) => location.pathname === path;
+
+            return (
+                <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface-container-highest border-t-2 border-on-surface shadow-[0_-4px_0px_0px_rgba(27,28,28,1)]">
+                    <Link to="/" class={`flex flex-col items-center justify-center rounded-full px-4 py-1 font-label-pixel text-label-pixel ${isActive('/') ? 'bg-primary text-on-primary rotate-2' : 'text-on-surface-variant'}`}>
+                        <span class="material-symbols-outlined" style={{fontVariationSettings: isActive('/') ? "'FILL' 1" : "'FILL' 0"}}>home</span>
+                        <span>Home</span>
+                    </Link>
+                    <Link to="/mood" class={`flex flex-col items-center justify-center rounded-full px-4 py-1 font-label-pixel text-label-pixel ${isActive('/mood') ? 'bg-primary text-on-primary rotate-2' : 'text-on-surface-variant'}`}>
+                        <span class="material-symbols-outlined" style={{fontVariationSettings: isActive('/mood') ? "'FILL' 1" : "'FILL' 0"}}>favorite</span>
+                        <span>Mood</span>
+                    </Link>
+                    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 font-label-pixel text-label-pixel hover:bg-tertiary-container transition-colors" href="#">
+                        <span class="material-symbols-outlined">photo_library</span>
+                        <span>Photos</span>
+                    </a>
+                    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 font-label-pixel text-label-pixel hover:bg-tertiary-container transition-colors" href="#">
+                        <span class="material-symbols-outlined">auto_stories</span>
+                        <span>Letter</span>
+                    </a>
+                </nav>
+            );
+        };
+
+        // --- Pages ---
+
+        const HomePage = () => {
+            return (
+                <main class="pt-32 pb-24 max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop space-y-24">
+                    {/* Hero Section */}
+                    <section class="relative grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div class="relative z-10 space-y-6">
+                            <div class="inline-block bg-tertiary text-on-tertiary px-4 py-1 -rotate-2 font-label-pixel text-label-pixel">
+                                Bellu! I hope you like this babi!
+                            </div>
+                            <h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg leading-none">
+                                WE NEED TO <span class="text-primary italic">TALK</span> ( I love you! ) 
+                            </h1>
+                            <p class="font-body-lg text-body-lg max-w-md">
+                                Things got a little sour (get it?), but I really want to make them sweet again. I really want to see you soon baby yaar. Please let me know if we can meet tomorrow!!
+                            </p>
+                            <div class="flex gap-4">
+                                <span class="bg-on-surface text-surface font-label-pixel text-label-pixel px-4 py-2 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">warning</span>
+                                    PARENTAL ADVISORY: I LIKE YOU TOO MUCH
+                                </span>
+                            </div>
+                        </div>
+                        {/* Polaroid */}
+                        <div class="relative flex justify-center lg:justify-end">
+                            <div class="relative rotate-2 bg-white p-6 shadow-brutal border-2 border-on-surface max-w-sm w-full">
+                                <div class="absolute -top-4 -left-8 w-32 h-10 bg-secondary/80 border border-on-surface/20 -rotate-12 duct-tape-texture z-20"></div>
+                                <div class="aspect-square bg-surface-variant overflow-hidden border-2 border-on-surface">
+                                    <img class="w-full h-full object-cover grayscale-[20%] sepia-[10%]" src="sourImage.jpeg"/>
+                                </div>
+                                <div class="mt-4 font-note-text text-note-text text-center text-on-surface">
+                                    I love every second with you
+                                </div>
+                                <span class="material-symbols-outlined absolute -top-8 -right-8 text-6xl text-primary animate-float" style={{fontVariationSettings: "'FILL' 1"}}>1k</span>
+                                <span class="material-symbols-outlined absolute bottom-12 -left-10 text-4xl text-secondary animate-float delay-700" style={{fontVariationSettings: "'FILL' 1"}}>favorite</span>
+                                <div class="absolute -bottom-4 -right-6 w-24 h-8 bg-tertiary/70 border border-on-surface/20 rotate-45 duct-tape-texture z-20"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Letter Section */}
+                    <section class="max-w-3xl mx-auto">
+                        <div class="paper-texture bg-white border-2 border-on-surface shadow-brutal p-8 md:p-12 relative -rotate-1">
+                            <div class="absolute left-12 top-0 bottom-0 w-[2px] bg-red-200"></div>
+                            <h2 class="font-headline-md text-headline-md text-on-surface-variant mb-8 pl-8">Bellu Babiii</h2>
+                            <div class="notebook-lines pl-8">
+                                <div 
+                                    contentEditable 
+                                    className="w-full bg-transparent border-none focus:ring-0 font-note-text text-note-text leading-[2.5rem] min-h-[300px] text-on-surface outline-none"
+                                    onInput={(e) => {
+                                        // Optional: handle state if needed, but browser handles height naturally for contentEditable
+                                    }}
+                                    dangerouslySetInnerHTML={{ __html: `I know that things last night got a little rough. And I really hope that this website can help make you feel even 1% better baby. I really love you and I never want you to be upset at or because of me.<br><br> I want you to know that meeting you and being able to date you has been the greatest thing that could have ever happened to me becasue I cannot belive how perfect being with you is. Thank you for always loving and caring for me as much as you do and for letting me be your man. (trust me, I know I dont deserve it). <br><br> I look at you and realize that I can do better, much better as a boyfriend and I hope this, and from now on, I am able to live up to that promise. I want you to have nothing but the best and most perfect things in life, because that is exactly what you have given me and everyone else around you. I tell things about you to everyone around me because I just feel like I am so so so happy to be the man you are dating. <br><br> I am still learning my darling, learning how to be a better person, and I want to apologize for messing up at times, I really promise to be better from now on, and not have things that you need to keep to yourself. I really really apreciate everything you have done to help me become the man I am today. Love you! <br><br> Baby I love you so much and I want that your entire life that you spend with me is like the first half of the new Olivia album, because I for sure know that no matter what happens, I will do everything in my power to never ever let you feel like the second half of the album. Thank you for showing me the album, thank you for spending timw with me, thank you for loving me, thank you for everything my baby. I love you... so much. <br><br> I love you my everything. <br><br> With all the love in his heart,<br>Nakul` }}
+                                />
+                            </div>
+                            <div class="absolute -top-4 right-8 bg-secondary-container text-on-secondary-container px-3 py-1 font-label-pixel text-label-pixel rotate-3 border border-on-surface">
+                                URGENT!!
+                            </div>
+                            <div class="absolute -bottom-6 -left-4 w-16 h-16 bg-primary rounded-full border-2 border-on-surface flex items-center justify-center text-white rotate-[-15deg] shadow-brutal">
+                                <span class="material-symbols-outlined">mail</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Mood Locket Promo */}
+                    <section class="flex justify-center">
+                        <div class="max-w-4xl w-full bg-secondary-container border-2 border-on-surface p-8 shadow-brutal relative overflow-hidden group text-center flex flex-col items-center">
+                            <div class="relative z-10 flex flex-col h-full items-center">
+                                <div class="flex flex-col items-center">
+                                    <div class="flex items-center justify-center gap-3 mb-4">
+                                        <div class="w-12 h-12 bg-on-surface text-surface-container flex items-center justify-center rounded-lg rotate-3 group-hover:rotate-12 transition-transform">
+                                            <span class="material-symbols-outlined text-3xl">lock</span>
+                                        </div>
+                                        <h3 class="font-headline-md text-headline-md text-on-secondary-container">DO YOU SEEM "PRETTY SAD" OR A "GIRL SO IN LOVE"?</h3>
+                                    </div>
+                                    <p class="font-body-lg text-body-lg text-on-secondary-container max-w-md mx-auto">
+                                        Babii do this little quiz to see which part of the album you are! I love how much you love this album and thank you for making me also listen to it.
+                                    </p>
+                                </div>
+                                <div class="mt-8">
+                                    <Link to="/mood" class="inline-block bg-tertiary text-on-tertiary font-label-pixel text-label-pixel px-8 py-3 border-2 border-on-surface shadow-brutal hover:scale-105 active:scale-95 transition-all">
+                                        PLAY NOW
+                                    </Link>
+                                </div>
+                            </div>
+                            <span class="material-symbols-outlined absolute -bottom-4 -right-4 text-9xl text-on-surface/5 rotate-12 select-none">videogame_asset</span>
+                        </div>
+                    </section>
+
+                    {/* RSVP */}
+                    <section class="text-center py-12 space-y-12">
+                        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg">I really want to see you!! Can we plan something tomorrow???</h2>
+                        <div class="flex flex-wrap justify-center gap-12">
+                            <button class="group relative">
+                                <div class="absolute -inset-4 border-2 border-dashed border-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity animate-[spin_10s_linear_infinite]"></div>
+                                <div class="relative bg-primary text-on-primary font-headline-md text-headline-md px-12 py-4 border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(27,28,28,1)] -rotate-3 hover:rotate-0 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                                    YES! :)
+                                </div>
+                            </button>
+                            <button class="group relative">
+                                <div class="relative bg-surface-container text-on-surface-variant font-headline-md text-headline-md px-12 py-4 border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(27,28,28,1)] rotate-2 hover:rotate-0 opacity-80 hover:opacity-100 transition-all">
+                                    NO... :(
+                                </div>
+                                <div class="absolute inset-0 bg-on-surface/10 scale-x-0 group-hover:scale-x-100 transition-transform origin-left pointer-events-none"></div>
+                            </button>
+                        </div>
+                    </section>
+                </main>
+            );
+        };
+
+        const MoodLocketPage = () => {
+            const [gameState, setGameState] = useState('start'); // start, game, result
+            const [currentStep, setCurrentStep] = useState(0);
+            const [score, setScore] = useState(0);
+            const [isGlitching, setIsGlitching] = useState(false);
+
+            const questions = [
+                {
+                    q: "I completely forgot our anniversary... what's your reaction?",
+                    a: '"And to that I say fuck it whatever / \'Cause I got a feeling / Wounds are healing" (u + me = <3)',
+                    b: '"Give me back my time and I will give you back your heart / I thought that we made the perfect couple / \'Til you didn\'t want the part" (cigarette smoke)',
+                    scoreA: 1,
+                    scoreB: -1
+                },
+                {
+                    q: "We're at a crowded party and I try to win over your friends with my really bad, cringe jokes. What are you thinking?",
+                    a: '"And all my ex-boyfriends have heard these lines / (Let\'s get married when we\'re 25) / But I like you better by a million times" (u + me = <3)',
+                    b: '"And sometimes, at a low point, I even wish for a tragedy / \'Cause I know he\'d come over and take real good care of me" (maggots for brains)',
+                    scoreA: 1,
+                    scoreB: -1
+                },
+                {
+                    q: "How does it feel when we're just hanging out doing absolutely nothing at home?",
+                    a: '"I used to visit your town like a tourist / Now I got / A local grocery store and a favorite florist" (purple)',
+                    b: '"I\'m a zombie in my body / I\'m a train off of the track / I feel dirty, I feel rotten / And the colors are all flat" (maggots for brains)',
+                    scoreA: 1,
+                    scoreB: -1
+                },
+                {
+                    q: "I'm leaving for a trip and saying goodbye. What is the vibe?",
+                    a: '"I often get the feeling that I\'ll never want somebody else" (u + me = <3)',
+                    b: '"If loving me means saying, \'Babe, I think this is the end\' / I guess / I wish, I wish, I wish you loved me less" (less)',
+                    scoreA: 1,
+                    scoreB: -1
+                },
+                {
+                    q: "When you look at where we started versus where we are now, what comes to mind?",
+                    a: '"Carve our names / Into the car seat leather / You plus me equals a heart forever" (u + me = <3)',
+                    b: '"Past mistakes are just new information / These days, I\'ve got expectations" (expectations)',
+                    scoreA: 1,
+                    scoreB: -1
+                }
+            ];
+
+            const triggerGlitch = () => {
+                setIsGlitching(true);
+                setTimeout(() => setIsGlitching(false), 150);
+            };
+
+            const handleChoice = (choice) => {
+                triggerGlitch();
+                const q = questions[currentStep];
+                const newScore = score + (choice === 'A' ? q.scoreA : q.scoreB);
+                setScore(newScore);
+                
+                if (currentStep < questions.length - 1) {
+                    setCurrentStep(currentStep + 1);
+                } else {
+                    setGameState('result');
+                }
+            };
+
+            const resetGame = () => {
+                setGameState('start');
+                setCurrentStep(0);
+                setScore(0);
+            };
+
+            return (
+                <main class="pt-32 pb-32 px-margin-mobile md:px-margin-desktop min-h-screen relative flex flex-col items-center justify-center overflow-hidden">
+                    {/* Scrapbook Decor */}
+                    <div class="absolute top-24 left-10 opacity-20 -rotate-12 pointer-events-none hidden md:block">
+                        <img class="w-48 h-48 object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAh2vzLgEVPCSoHXNdHMCfkFP5AoOEU-8VEsKbgW_6zQGAdyYrBtF61wVM21QJ0Gm1Zwnz-BeFDt9Bj_LoxL1ePrxeDFxdlVYcJJZf6ylfePzCHaXdJiCXK5H0vq9YutdMTJ933mKEfCsr0EBHhX0yxsIUnRx8V50h0-geOG50umpNkQMsMxUamErMbBdfQ-eVj8GuMARJ-ufTQaKiBa3bV4DOlUHh_RCxk-0NTd66toN1a5V-sUPyU4Q"/>
+                    </div>
+                    <div class="absolute bottom-20 right-10 opacity-20 rotate-6 pointer-events-none hidden md:block">
+                        <img class="w-64 h-64 object-cover rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAikt5AhGKyAwXKYo4lBmEi324mEioI8zgwyLYHH2IJ41wc9258YgxmEtPkJI5jjzcdaMM1_V61zRQHTE5zN18MkOS-mPiT45zV0sYImUzcbbAnf57mApdDiGREGzC9r-WFTLeqRDOmgcohZ7_pHglM4OxjQHVkETjaL7v2SAlHLxcnu5FbPHnpFtBWzNY5W4AvZ0IlBRAkgaQl4e8hI7xLg12ritU8i--X0PzxCN8NJFkx4y_2WaXnsA"/>
+                    </div>
+
+                    <div class={`relative w-full max-w-2xl bg-secondary-container border-[3px] border-on-surface p-8 shadow-[8px_8px_0px_0px_rgba(27,28,28,1)] rotate-1 flex flex-col items-center transition-all duration-500`}>
+                        <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-48 h-12 bg-tertiary text-on-tertiary flex items-center justify-center font-label-pixel text-label-pixel duct-tape-texture rotate-[-2deg] shadow-md z-10">
+                            MOOD LOCKET
+                        </div>
+
+                        {gameState === 'start' && (
+                            <div class="flex flex-col items-center py-8">
+                                <div class="mb-8 shake cursor-pointer group" onClick={() => setGameState('game')}>
+                                    <div class="w-48 h-48 bg-primary-fixed-dim pixel-border rounded-full flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(27,28,28,1)] relative overflow-hidden">
+                                        <span class="material-symbols-outlined text-primary text-8xl" style={{fontVariationSettings: "'FILL' 1"}}>lock_open</span>
+                                        <div class="absolute inset-0 shimmer opacity-50"></div>
+                                    </div>
+                                    <p class="mt-4 font-note-text text-note-text text-center rotate-2">Tap to unlock your destiny...</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {gameState === 'game' && (
+                            <div class="flex flex-col items-center w-full">
+                                <div class="mb-6 w-full bg-surface-container border-2 border-on-surface p-4 rotate-[-1deg] shadow-[4px_4px_0px_0px_rgba(27,28,28,1)]">
+                                    <p class="font-headline-md text-headline-md text-on-surface text-center leading-tight">
+                                        {questions[currentStep].q}
+                                    </p>
+                                </div>
+                                <div class="grid grid-cols-1 gap-4 w-full">
+                                    <button class="group relative bg-on-surface p-4 text-left hover:scale-[1.01] transition-transform" onClick={() => handleChoice('A')}>
+                                        <div class="bg-secondary-fixed text-on-secondary-fixed p-4 border-2 border-white font-body-lg h-full">
+                                            <span class="font-label-pixel text-label-pixel block mb-2 opacity-60 uppercase">Choice A (Girl So In Love)</span>
+                                            {questions[currentStep].a}
+                                        </div>
+                                        <div class="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <span class="material-symbols-outlined text-secondary">star</span>
+                                        </div>
+                                    </button>
+                                    <button class="group relative bg-on-surface p-4 text-left hover:scale-[1.01] transition-transform" onClick={() => handleChoice('B')}>
+                                        <div class="bg-surface-variant text-on-surface-variant p-4 border-2 border-white font-body-lg h-full">
+                                            <span class="font-label-pixel text-label-pixel block mb-2 opacity-60 uppercase">Choice B (You Seem Pretty Sad)</span>
+                                            {questions[currentStep].b}
+                                        </div>
+                                        <div class="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <span class="material-symbols-outlined text-on-surface-variant">heart_broken</span>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="mt-8 flex gap-3">
+                                    {questions.map((_, i) => (
+                                        <div key={i} class={`w-4 h-4 rounded-full border-2 border-on-surface ${i === currentStep ? 'bg-primary' : i < currentStep ? 'bg-on-surface' : 'bg-surface'}`}></div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {gameState === 'result' && (
+                            <div class="flex flex-col items-center w-full py-6">
+                                <div class={`w-56 h-56 pixel-border rounded-full flex flex-col items-center justify-center shadow-[8px_8px_0px_0px_rgba(27,28,28,1)] relative transition-all duration-1000 scale-110 mb-8 ${score >= 0 ? 'bg-secondary-container border-primary' : 'bg-surface-variant border-on-surface-variant'}`}>
+                                    <span class={`material-symbols-outlined text-8xl ${score >= 0 ? 'text-primary' : 'text-on-surface-variant'}`} style={{fontVariationSettings: "'FILL' 1"}}>
+                                        {score >= 0 ? 'favorite' : 'heart_broken'}
+                                    </span>
+                                    <div class="absolute inset-0 shimmer opacity-75"></div>
+                                </div>
+                                <h2 class={`font-headline-lg text-headline-lg text-center uppercase mb-4 rotate-2 ${score >= 0 ? 'text-primary' : 'text-on-surface-variant'}`}>
+                                    {score >= 0 ? '🌸 "Girl So In Love"' : '🎸 "You Seem Pretty Sad"'}
+                                </h2>
+                                <p class="font-note-text text-note-text text-center max-w-sm mb-8">
+                                    {score >= 0 
+                                        ? "You are living in the sweetest, coziest part of the album. Total heart-eyes, comfortable love, and \"heart forever\" energy!"
+                                        : "You aren't actually sad—you're just the iconic Olivia Rodrigo main character! You have high expectations, a love for dramatic flair, and you keep things exciting."}
+                                </p>
+                                <div class="flex flex-col md:flex-row gap-4 w-full justify-center">
+                                    <button class="bg-tertiary text-on-tertiary px-8 py-4 font-label-pixel text-label-pixel duct-tape-texture rotate-1 shadow-[4px_4px_0px_0px_rgba(27,28,28,1)] hover:scale-110 active:translate-y-1 transition-all" onClick={resetGame}>
+                                        PLAY AGAIN
+                                    </button>
+                                    <Link to="/" class="border-b-2 border-on-surface font-label-pixel text-label-pixel py-4 px-8 text-center hover:bg-surface-variant/30 transition-colors">
+                                        READ THE LETTER
+                                    </Link>
+                                </div>
+                            </div>
+                        )}
+                        
+                        {isGlitching && <div class="glitch-anim fixed inset-0 bg-primary/20 pointer-events-none z-[100]"></div>}
+                    </div>
+                </main>
+            );
+        };
+
+        // --- App Shell ---
+
+        const App = () => {
+            return (
+                <MemoryRouter>
+                    <Header />
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/mood" element={<MoodLocketPage />} />
+                    </Routes>
+                    <BottomNav />
+                    
+                    {/* Background floating elements (Shared) */}
+                    <div class="fixed inset-0 pointer-events-none z-[-1] opacity-40">
+                        <div class="absolute top-1/4 left-10 text-4xl -rotate-12">🌟</div>
+                        <div class="absolute top-3/4 right-20 text-5xl rotate-45">⚡</div>
+                        <div class="absolute bottom-20 left-1/3 text-3xl -rotate-6">🌈</div>
+                        <div class="absolute top-1/2 right-1/4 text-4xl rotate-12">🍒</div>
+                    </div>
+                </MemoryRouter>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
